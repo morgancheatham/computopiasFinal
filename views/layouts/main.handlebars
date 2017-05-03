@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NAME</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" media="all" href="css/jquery.minicolors.css">
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/jquery.minicolors.min.js"></script>
+  <style>
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+#s .tick:last-of-type text,
+#l .tick:last-of-type text {
+  display: none;
+}
+
+.channel canvas {
+  float: left;
+  margin: 40px 30px 0 30px;
+  width: 900px;
+  height: 90px;
+}
+  </style>
+
+
+</head>
+<body>
+
+  <div class="row">
+    <div class="col-lg-6" style="padding-left:10%;">
+      <div class="row" style="padding-top:5%;"></div>
+      
+
+      <div class="row">
+        <div class="checkbox">
+          <input id="checkbox1" type="checkbox">
+          <label for="checkbox1" style="font-family:Helvetica;font-size:20px;color:black;">
+            Twitter
+          </label>
+        </div>
+        <div class="checkbox">
+          <input id="checkbox2" type="checkbox">
+          <label for="checkbox2" style="font-family:Helvetica;font-size:20px;color:black;">
+            Facebook
+          </label>
+        </div>
+        <div class="checkbox">
+          <input id="checkbox3" type="checkbox">
+          <label for="checkbox3" style="font-family:Helvetica;font-size:20px;color:black;">
+            Instagram
+          </label>
+        </div>
+
+   <div class="well">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="hue-demo">Hue</label>
+            <input type="text" id="hue-demo" class="form-control demo" data-control="hue" value="#ff6161">
+          </div>
+          
+          <div class="form-group">
+            <label for="saturation-demo">Saturation</label>
+            <input type="text" id="saturation-demo" class="form-control demo" data-control="saturation" value="#0088cc">
+          </div>
+        </div>
+        
+        <div class="col-md-1"></div>
+        
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="brightness-demo">Brightness</label>
+            <input type="text" id="brightness-demo" class="form-control demo" data-control="brightness" value="#00ffff">
+          </div>
+          <div class="form-group">
+            <label for="wheel-demo">Wheel</label>
+            <input type="text" id="wheel-demo" class="form-control demo" data-control="wheel" value="#ff99ee">
+          </div>
+        </div>
+
+      </div><!-- @end .row -->
+    </div><!-- @end .well -->
+    
+    <h3>Inline Color Picker</h3>
+    <div class="well">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <input type="text" id="inlinecolors" class="form-control" data-inline="true" value="#4fc8db">
+          </div>
+        </div>
+        
+        <div id="inlinecolorhex" class="col-md-8">
+          <h3>Current selection: <small>#4fc8db</small></h3>
+        </div>
+      </div><!-- @end .row -->
+    </div><!-- @end .well -->
+
+      </div>
+
+
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-6" style="margin-top:-5%;">
+      {{{ body }}}
+    </div><!-- /.col-lg-6 -->
+  </div><!-- /.row -->
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<script type="text/javascript">
+$(function(){
+  var colpick = $('.demo').each( function() {
+    $(this).minicolors({
+      control: $(this).attr('data-control') || 'hue',
+      inline: $(this).attr('data-inline') === 'true',
+      letterCase: 'lowercase',
+      opacity: false,
+      change: function(hex, opacity) {
+        if(!hex) return;
+        if(opacity) hex += ', ' + opacity;
+        try {
+          console.log(hex);
+        } catch(e) {}
+        $(this).select();
+      },
+      theme: 'bootstrap'
+    });
+  });
+  
+  var $inlinehex = $('#inlinecolorhex h3 small');
+  $('#inlinecolors').minicolors({
+    inline: true,
+    theme: 'bootstrap',
+    change: function(hex) {
+      if(!hex) return;
+      $inlinehex.html(hex);
+    }
+  });
+});
+</script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+      <script>
+      $(function () {
+        $('#cp4').colorpicker().on('changeColor', function(e) {
+          $('body')[0].style.backgroundColor = e.color.toString(
+            'rgba');
+        });
+
+      });
+      </script>
+    </footer>
+    
+    <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
+    <script src="js/bundle.js"></script>
+
+  </body>
+  </html>
